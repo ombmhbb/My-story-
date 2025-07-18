@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>رسالة خاصة</title>
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      text-align: center;
+      padding: 40px;
+      overflow: hidden;
+      transition: background 1s;
+      background-color: #fdfdfd;
+    }
+
+    input {
+      padding: 10px;
+      margin: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      width: 250px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #ff69b4;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    #message {
+      margin-top: 30px;
+      font-size: 20px;
+      color: #333;
+    }
+
+    .pulse {
+      animation: pulse 1s infinite;
+      font-weight: bold;
+      color: #d63384;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); opacity: 0.8; }
+    }
+
+    .flower {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background: url('https://i.imgur.com/OmT6aUa.png') no-repeat center;
+      background-size: cover;
+      animation: fall linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <h2>أدخل اسمك الكامل والرمز الخاص</h2>
+  <input type="text" id="name" placeholder="اسمك الكامل (بالإنجليزية)">
+  <br>
+  <input type="text" id="code" placeholder="الرمز السري">
+  <br>
+  <button onclick="check()">عرض الرسالة</button>
+  <div id="message"></div>
+
+  <!-- ملف الصوت المحلي -->
+  <audio id="winSound" src="ttp.mp3"></audio>
+
+  <script>
+    function createFlower() {
+      const flower = document.createElement('div');
+      flower.classList.add('flower');
+      flower.style.left = Math.random() * 100 + 'vw';
+      flower.style.animationDuration = (2 + Math.random() * 3) + 's';
+      document.body.appendChild(flower);
+      setTimeout(() => flower.remove(), 6000);
+    }
+
+    function startFlowers() {
+      for (let i = 0; i < 40; i++) {
+        setTimeout(createFlower, i * 200);
+      }
+    }
+
+    function check() {
+      const nameInput = document.getElementById("name").value.trim().toLowerCase();
+      const codeInput = document.getElementById("code").value.trim().toLowerCase();
+
+      const correctName = "mohammed hamed";
+      const correctCode = "md13103";
+
+      const messageDiv = document.getElementById("message");
+      const sound = document.getElementById("winSound");
+
+      // مطر الورد وصوت الفوز للجميع
+      startFlowers();
+      sound.play();
+
+      if (nameInput === correctName && codeInput === correctCode) {
+        document.body.style.background = "linear-gradient(to bottom, #fffbe6, #ffe6f0)";
+        messageDiv.innerHTML = `
+          <p>مازلت أهوى ظلك المستور 🌙، وأرجو لقاءً في الحلال يدوم.</p>
+          <p class="pulse">أتمنى أن تكون من نصيبي 💞</p>
+        `;
+      } else {
+        messageDiv.innerHTML = `<p>ابتسم 😊، فأنت جميل، ولا شيء يستحق أن تحزن لأجله.</p>`;
+      }
+    }
+  </script>
+</body>
+</html>
